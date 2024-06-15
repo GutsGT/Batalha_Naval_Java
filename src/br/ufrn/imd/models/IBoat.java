@@ -1,7 +1,14 @@
 package br.ufrn.imd.models;
 
+/**
+ * @author Otávio Augusto
+ * @version 1.0
+ * 
+ */
+
+
 public interface IBoat {
-	public boolean shoot();
+	public int[] shootIn(int x, int y);
 	public void destroy();
 	public void rotate();
 	

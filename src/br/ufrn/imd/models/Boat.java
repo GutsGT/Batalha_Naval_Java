@@ -1,9 +1,17 @@
 package br.ufrn.imd.models;
 
+/**
+ * @author Otávio Augusto
+ * @version 1.0
+ * 
+ */
+
+
 public abstract class Boat implements IBoat{
-	private int width;				
-	private int height;				
+	protected int width;				
+	protected int height;				
 	private boolean destroyed;		
+	protected int shootRangeLevel;	//[1-4]
 	private int xPosition;			//Must be between [0, 9-(width-1)], is always the position of the left side of the boat
 	private int yPosition;			//Must be between [0, 9-(height-1)], is always the position of the upper side of the boat
 	
@@ -14,7 +22,7 @@ public abstract class Boat implements IBoat{
 		this.xPosition = 0;
 		this.yPosition = 0;
 	}
-		
+	
 	public int getWidth() {
 		return width;
 	}
@@ -46,4 +54,12 @@ public abstract class Boat implements IBoat{
 		this.xPosition = x;
 		this.yPosition = y;
 	}
+	
+	public int[] shootIn(int x, int y) {
+		int[] res = new int[3];
+		res[0] = x;
+		res[1] = y;
+		res[2] = this.shootRangeLevel;
+		return res;
+	}	
 }
