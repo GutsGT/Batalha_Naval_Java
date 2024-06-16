@@ -14,14 +14,7 @@ public class BoatDAO {
 		this.boats.remove(b);
 	}
 	
-	public boolean hasBoatInCoord(int x, int y) {
-		for(Boat boat: this.boats) {
-			if(x >= boat.getXPosition() && x < boat.getXPosition()+boat.getWidth()
-				&& y >= boat.getYPosition() && y < boat.getYPosition()+boat.getHeight()
-			){
-				return true;
-			}
-		}
-		return false;
+	public int getSize() {
+		return this.boats.size();
 	}
 }

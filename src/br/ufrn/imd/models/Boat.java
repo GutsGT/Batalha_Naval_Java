@@ -1,5 +1,7 @@
 package br.ufrn.imd.models;
 
+import java.util.ArrayList;
+
 /**
  * @author Otávio Augusto
  * @version 1.0
@@ -8,8 +10,8 @@ package br.ufrn.imd.models;
 
 
 public abstract class Boat implements IBoat{
-	protected int width;				
-	protected int height;				
+	private int width;				
+	private int height;				
 	private boolean destroyed;		
 	protected int shootRangeLevel;	//[1-4]
 	private int xPosition;			//Must be between [0, 9-(width-1)], is always the position of the left side of the boat
@@ -26,8 +28,14 @@ public abstract class Boat implements IBoat{
 	public int getWidth() {
 		return width;
 	}
+	protected void setWidth(int width) {
+		this.width = width;
+	}
 	public int getHeight() {
 		return height;
+	}
+	protected void setHeight(int height) {
+		this.height = height;
 	}
 	public boolean isDestroyed() {
 		return destroyed;
@@ -61,5 +69,20 @@ public abstract class Boat implements IBoat{
 		res[1] = y;
 		res[2] = this.shootRangeLevel;
 		return res;
-	}	
+	}
+	
+	public ArrayList<int[]> getCoords(){
+		ArrayList<int[]> res = new ArrayList<int[]>();
+		
+		for(int w = 0; w < this.width; w++) {
+			int[] tuple = new int[2];
+			tuple[0] = w;
+			for(int h = 0; h < this.height; h++) {
+				tuple[1] = h;
+				res.add(tuple);
+			}
+		}
+		
+		return res;
+	}
 }

@@ -10,8 +10,8 @@ package br.ufrn.imd.models;
 public class Corveta extends Boat{
 	
 	public Corveta() {
-		this.width = 1;
-		this.height = 2;
+		this.setWidth(1);
+		this.setHeight(2);
 		this.shootRangeLevel = 1;
 	}
 }

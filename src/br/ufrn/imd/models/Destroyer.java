@@ -9,8 +9,8 @@ package br.ufrn.imd.models;
 
 public class Destroyer extends Boat{
 	public Destroyer() {
-		this.width = 1;
-		this.height = 5;
+		this.setWidth(1);
+		this.setHeight(5);
 		this.shootRangeLevel = 1;
 	}
 }
