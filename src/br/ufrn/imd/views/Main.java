@@ -52,16 +52,16 @@ public class Main {
 		while(turno < 3){
 			if(turno == 1) {
 				shootCoords = battleMenu(input, player1, shootCoords);
-				if(player2.getBoard().hasBeenDefeated()) {
-					turno = 3;
+				if(player1.getBoard().hasBeenDefeated()) {
+					turno = 4;
 					continue;
 				}else {
 					turno = 2;					
 				}
 			}else if(turno == 2) {
 				shootCoords = battleMenu(input, player2, shootCoords);
-				if(player1.getBoard().hasBeenDefeated()) {
-					turno = 4;
+				if(player2.getBoard().hasBeenDefeated()) {
+					turno = 3;
 					continue;
 				}else {
 					turno = 1;
