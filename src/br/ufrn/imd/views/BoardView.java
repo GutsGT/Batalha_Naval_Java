@@ -18,34 +18,33 @@ public abstract class BoardView {
 		for(int f = 0; f < board.getWidth(); f++) {
 			System.out.print("----");
 		}
-		int rowIndex = 0;
-		int partNumber = 0;
-		for(Boat[] row: board.getCoords()) {
+		Boat[][] coords = board.getCoords();
+		for(int f = 0; f < coords.length; f++){
 			System.out.println("-");
-			System.out.print(rowIndex);
-			rowIndex++;
-			for(Boat coord: row) {
-				if(coord == null) {
+			System.out.print(f);
+			for(int f2 = 0; f2 < coords[f].length; f2++) {
+				if(board.getShotCoord(f, f2)) {
+					System.out.print("|xxx");
+				}else if(coords[f][f2] == null) {
 					System.out.print("|   ");
 				}else {
-					
-					if(coord instanceof Corveta){
+					if(coords[f][f2] instanceof Corveta){
 						System.out.print("| c ");						
 					}
-					if(coord instanceof Submarino) {
+					if(coords[f][f2] instanceof Submarino) {
 						System.out.print("| s ");						
 					}
-					if(coord instanceof Fragata) {
+					if(coords[f][f2] instanceof Fragata) {
 						System.out.print("| f ");						
 					}
-					if(coord instanceof Destroyer) {
+					if(coords[f][f2] instanceof Destroyer) {
 						System.out.print("| d ");						
 					}
 				}
 			}
 			System.out.println("|");
 			System.out.print(" ");
-			for(int f = 0; f < board.getWidth(); f++) {
+			for(int f2 = 0; f2 < board.getWidth(); f2++) {
 				System.out.print("----");
 			}
 		}

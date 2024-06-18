@@ -16,6 +16,9 @@ public class Board {
 		 this.height = 10;
 		 this.dao = new BoatDAO();
 		 this.coords = new Boat[width][height];
+		 
+		 this.shotCoords = new boolean[width][height];
+		 
 		 for(int f = 0; f < width; f++) {
 			 for(int f2 = 0; f2 < height; f2++) {
 				 this.shotCoords[f][f2] = false;
@@ -35,6 +38,12 @@ public class Board {
 	}
 	public Boat[][] getCoords() {
 		return coords;
+	}
+	public boolean getShotCoord(int x, int y) {
+		return this.shotCoords[x][y];
+	}
+	public void setShotCoord(int x, int y) {
+		this.shotCoords[x][y] = true;
 	}
 	//}
 	
@@ -163,5 +172,19 @@ public class Board {
 				}
 			}
 		}
+	}
+	
+	public boolean hasBeenDefeated() {
+		Boat boat;
+		for(int f = 0; f < this.getDao().getSize(); f++) {
+			boat = this.dao.getBoat(f);
+			boolean[] dP = boat.getDestroyedParts();
+			for(int f2 = 0; f2 < dP.length; f2++) {
+				if(dP[f2] == false) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 }

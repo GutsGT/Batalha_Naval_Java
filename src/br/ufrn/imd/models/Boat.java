@@ -33,6 +33,10 @@ public abstract class Boat implements IBoat{
 		this.height = height;
 	}
 	
+	public boolean[] getDestroyedParts() {
+		return this.destroyedParts;
+	}
+	
 	public void setDestroyedParts() {
 		this.destroyedParts = new boolean[this.width*this.height];
 		for(int f = 0; f < this.width*this.height; f++) {

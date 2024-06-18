@@ -40,21 +40,41 @@ public class Main {
 		
 		System.out.println("Player "+player1.getName());
 		mainMenu(input, player1);
+		System.out.println("\n\n\n\n");
 		System.out.println("Player "+player2.getName());
 		mainMenu(input, player2);
+		System.out.println("\n\n\n\n");
 		
 		
 		int turno = 1; //1: Player1; 2: Player2; 3: Fim de jogo.
 		
-		int[] shootCoords = null;
+		int[] shootCoords = new int[]{-1,-1};
 		while(turno < 3){
 			if(turno == 1) {
-				turno = battleMenu(input, player1, shootCoords)? 2: 4;
+				shootCoords = battleMenu(input, player1, shootCoords);
+				if(player2.getBoard().hasBeenDefeated()) {
+					turno = 3;
+					continue;
+				}else {
+					turno = 2;					
+				}
 			}else if(turno == 2) {
-				turno = battleMenu(input, player1, shootCoords)? 1: 3;
+				shootCoords = battleMenu(input, player2, shootCoords);
+				if(player1.getBoard().hasBeenDefeated()) {
+					turno = 4;
+					continue;
+				}else {
+					turno = 1;
+				}
 			}
+			System.out.println("\n\n\n\n\n\n\n");
 		}
 		
+		if(turno == 3) {
+			System.out.println("PLAYER "+player1.getName()+" VENCEU!!!!");
+		}else if(turno == 4) {
+			System.out.println("PLAYER "+player2.getName()+" VENCEU!!!!");
+		}
 		input.close();
 	}
 	
@@ -147,31 +167,39 @@ public class Main {
 		}
 	}
 	
-	public static boolean battleMenu(Scanner input, Player player, int[] prevShootCoords) {
-		
-		if(prevShootCoords != null && player.getBoard().getCoords()[prevShootCoords[0]][prevShootCoords[1]] instanceof Boat) {
-			Boat boatFound = player.getBoard().getCoords()[prevShootCoords[0]][prevShootCoords[1]];
-			int partNum = getPartNum(boatFound, player.getBoard().getCoords(), prevShootCoords[0], prevShootCoords[1]);
-			boatFound.destroyPart(partNum);
+	public static int[] battleMenu(Scanner input, Player player, int[] prevShootCoords) {
+		if(prevShootCoords[0] != -1) {
+			if(player.getBoard().getCoords()[prevShootCoords[0]][prevShootCoords[1]] instanceof Boat) {
+				Boat boatFound = player.getBoard().getCoords()[prevShootCoords[0]][prevShootCoords[1]];
+				int partNum = getPartNum(boatFound, player.getBoard().getCoords(), prevShootCoords[0], prevShootCoords[1]);
+				boatFound.destroyPart(partNum-1);
+				boolean[] dp = boatFound.getDestroyedParts();
+			}
+			player.getBoard().setShotCoord(prevShootCoords[0], prevShootCoords[1]);
 		}
+		System.out.println("TURNO DE: "+player.getName());
+		BoardView.printBoard(player.getBoard());
+		
+		int x = -1;
+		int y = -1;
 		
 		System.out.println("Informe as coordenadas para atirar.");
 		System.out.print("X: ");
-		int x = input.nextInt();
+		x = input.nextInt();
 		System.out.print("Y: ");
-		int y = input.nextInt();
+		y = input.nextInt();
 		
-		return true;
+		return new int[] {x,y};
 	}
 	
 	public static int getPartNum(Boat boatFound, Boat[][] coords, int x, int y) {
 		int partNum = 1;
 		if(boatFound.getIsHorizontal()) {
-			while(y-partNum > 0 && coords[x][y-partNum] == boatFound){
+			while(y-partNum >= 0 && coords[x][y-partNum] == boatFound){
 				partNum++;
 			}
 		}else{
-			while(x-partNum > 0 && coords[x-partNum][y] == boatFound){
+			while(x-partNum >= 0 && coords[x-partNum][y] == boatFound){
 				partNum++;
 			}
 		}
