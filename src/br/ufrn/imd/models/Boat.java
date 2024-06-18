@@ -10,19 +10,14 @@ import java.util.ArrayList;
 
 
 public abstract class Boat implements IBoat{
-	private int width;				
-	private int height;				
-	private boolean destroyed;		
+	private int width;		
+	private int height;
+	private boolean[] destroyedParts;
 	protected int shootRangeLevel;	//[1-4]
-	private int xPosition;			//Must be between [0, 9-(width-1)], is always the position of the left side of the boat
-	private int yPosition;			//Must be between [0, 9-(height-1)], is always the position of the upper side of the boat
+	private boolean isHorizontal;
 	
 	public Boat() {
-		this.width = 1;
-		this.height = 1;
-		this.destroyed = false;
-		this.xPosition = 0;
-		this.yPosition = 0;
+		this.isHorizontal = true;
 	}
 	
 	public int getWidth() {
@@ -37,30 +32,27 @@ public abstract class Boat implements IBoat{
 	protected void setHeight(int height) {
 		this.height = height;
 	}
-	public boolean isDestroyed() {
-		return destroyed;
-	}
-	public int getXPosition() {
-		return xPosition;
-	}
-	public int getYPosition() {
-		return yPosition;
-	}
-
 	
-	public void destroy() {
-		this.destroyed = true;
+	public void setDestroyedParts() {
+		this.destroyedParts = new boolean[this.width*this.height];
+		for(int f = 0; f < this.width*this.height; f++) {
+			this.destroyedParts[f] = false;
+		}
+	}
+	
+	public void destroyPart(int index) {
+		this.destroyedParts[index] = true;
+	}
+	
+	public boolean getIsHorizontal() {
+		return this.isHorizontal;
 	}
 	
 	public void rotate() {
 		int val = this.width;
 		this.width = this.height;
 		this.height = val;
-	}
-	
-	public void move(int x, int y) {
-		this.xPosition = x;
-		this.yPosition = y;
+		this.isHorizontal = !this.isHorizontal;
 	}
 	
 	public int[] shootIn(int x, int y) {
@@ -68,21 +60,6 @@ public abstract class Boat implements IBoat{
 		res[0] = x;
 		res[1] = y;
 		res[2] = this.shootRangeLevel;
-		return res;
-	}
-	
-	public ArrayList<int[]> getCoords(){
-		ArrayList<int[]> res = new ArrayList<int[]>();
-		
-		for(int w = 0; w < this.width; w++) {
-			int[] tuple = new int[2];
-			tuple[0] = w;
-			for(int h = 0; h < this.height; h++) {
-				tuple[1] = h;
-				res.add(tuple);
-			}
-		}
-		
 		return res;
 	}
 }

@@ -9,8 +9,7 @@ package br.ufrn.imd.models;
 
 public interface IBoat {
 	public int[] shootIn(int x, int y);
-	public void destroy();
-	public void rotate();
+	public void destroyPart(int index);
 	
-	public void move(int x, int y);
+	public void setDestroyedParts();
 }

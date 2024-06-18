@@ -9,16 +9,27 @@ import br.ufrn.imd.models.Submarino;
 
 public abstract class BoardView {
 	public static void printBoard(Board board) {
+		System.out.print(" ");
+		for(int f = 0; f < board.getWidth(); f++) {
+			System.out.print("  "+f+" ");
+		}
+		System.out.println();
+		System.out.print(" ");
 		for(int f = 0; f < board.getWidth(); f++) {
 			System.out.print("----");
 		}
+		int rowIndex = 0;
+		int partNumber = 0;
 		for(Boat[] row: board.getCoords()) {
 			System.out.println("-");
+			System.out.print(rowIndex);
+			rowIndex++;
 			for(Boat coord: row) {
 				if(coord == null) {
 					System.out.print("|   ");
 				}else {
-					if(coord instanceof Corveta) {
+					
+					if(coord instanceof Corveta){
 						System.out.print("| c ");						
 					}
 					if(coord instanceof Submarino) {
@@ -33,6 +44,7 @@ public abstract class BoardView {
 				}
 			}
 			System.out.println("|");
+			System.out.print(" ");
 			for(int f = 0; f < board.getWidth(); f++) {
 				System.out.print("----");
 			}

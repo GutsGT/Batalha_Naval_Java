@@ -17,4 +17,8 @@ public class BoatDAO {
 	public int getSize() {
 		return this.boats.size();
 	}
+	
+	public Boat getBoat(int index) {
+		return this.boats.get(index);
+	}
 }
