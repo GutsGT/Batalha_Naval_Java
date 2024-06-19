@@ -4,7 +4,7 @@ import java.util.Random;
 
 import br.ufrn.imd.dao.BoatDAO;
 
-public class Board {
+public class Board{
 	private int width;
 	private int height;
 	private BoatDAO dao;
@@ -27,26 +27,54 @@ public class Board {
 	}
 	
 	//Getters and Setters{
+	
 	public int getWidth() {
 		return width;
 	}
+	
 	public int getHeight() {
 		return height;
 	}
+	
+	/**
+	 * Pega a lista de barcos do tabuleiro.
+	 * @return BoatDAO
+	 */
 	public BoatDAO getDao() {
 		return dao;
 	}
+	
+	/**
+	 * Pega a matriz que representa o tabuleiro.
+	 * @return Boat[][]
+	 */
 	public Boat[][] getCoords() {
 		return coords;
 	}
+	
+	/**
+	 * Confere se a coordenada já foi atingida.
+	 * @param x Linha do tabuleiro
+	 * @param y Coluna do tabuleiro
+	 * @return boolean
+	 */
 	public boolean getShotCoord(int x, int y) {
 		return this.shotCoords[x][y];
 	}
+	/**
+	 * Define que a coordenada foi atingida.
+	 * @param x Linha do tabuleiro
+	 * @param y Coluna do tabuleiro
+	 */
 	public void setShotCoord(int x, int y) {
 		this.shotCoords[x][y] = true;
 	}
 	//}
 	
+	/**
+	 * Adiciona um barco a um local aleatório do tabuleiro.
+	 * @param b Barco a adicionar
+	 */
 	public void addBoat(Boat b) {
 		Random random = new Random();
 		
@@ -64,9 +92,6 @@ public class Board {
 				}
 			}
 		}while(hasBoat);
-		while(this.coords[x][y] instanceof Boat || this.coords[x+b.getHeight()-1][y+b.getWidth()-1] instanceof Boat){
-			
-		}
 		
 		this.dao.addBoat(b);
 		
@@ -77,6 +102,13 @@ public class Board {
 		}
 	}
 	
+	/**
+	 * Movimenta o barco indicado para as coordenadas [x,y], lança uma Exception caso não seja permitido.
+	 * @param boat Barco a mover
+	 * @param x Linha do tabuleiro
+	 * @param y Coluna do tabuleiro
+	 * @throws Exception Caso não seja possível mover
+	 */
 	public void moveBoat(Boat boat, int x, int y) throws Exception{
 		if(x < 0 || y < 0 
 				 || x > this.getHeight()-1 || y > this.getWidth()-1 
@@ -117,6 +149,12 @@ public class Board {
 		}
 	}
 	
+	
+	/**
+	 * Rotaciona o barco utilizando o canto superior esquerdo como âncora, lança uma Exception caso não seja permitido.
+	 * @param boat Barco a rotacionar
+	 * @throws Exception Caso não seja possível rotacionar 
+	 */
 	public void rotateBoat(Boat boat) throws Exception{
 		
 		int[] boatPosition = null;
@@ -160,10 +198,13 @@ public class Board {
 		
 	}
 	
-	public void remBoat(Boat b) {
-		this.dao.remBoat(b);
-	}
-	
+	/**
+	 * Confere se o barco pode se movimentar para as coordenadas [x,y] sem conflitar com outro barco existente.
+	 * @param boat Barco que será movido
+	 * @param x Linha do tabuleiro
+	 * @param y Coluna do tabuleiro
+	 * @throws Exception Caso não seja possível mover
+	 */
 	public void canMoveTo(Boat boat, int x, int y) throws Exception{
 		for(int f = x; f < x+boat.getHeight(); f++) {
 			for(int f2 = y; f2 < y+boat.getWidth(); f2++) {
@@ -174,6 +215,10 @@ public class Board {
 		}
 	}
 	
+	/**
+	 * Confere se todas as partes de todos os barcos foram destruídos para retornar se o jogador foi derrotado. 
+	 * @return boolean
+	 */
 	public boolean hasBeenDefeated() {
 		Boat boat;
 		for(int f = 0; f < this.getDao().getSize(); f++) {

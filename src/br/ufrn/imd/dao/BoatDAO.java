@@ -14,11 +14,16 @@ public class BoatDAO {
 		this.boats.remove(b);
 	}
 	
+	public Boat getBoat(int index) {
+		return this.boats.get(index);
+	}
+	
+	/**
+	 * Retorna quantos barcos há na lista.
+	 * @return int
+	 */
 	public int getSize() {
 		return this.boats.size();
 	}
 	
-	public Boat getBoat(int index) {
-		return this.boats.get(index);
-	}
 }

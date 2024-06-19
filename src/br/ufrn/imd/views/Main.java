@@ -1,5 +1,6 @@
 package br.ufrn.imd.views;
 
+import java.util.Random;
 import java.util.Scanner;
 
 import br.ufrn.imd.models.Boat;
@@ -78,7 +79,11 @@ public class Main {
 		input.close();
 	}
 	
-	
+	/**
+	 * Tela inicial que será apresentada aos usuários para posicionar os barcos antes de começar a batalha.
+	 * @param input Scanner
+	 * @param player Player
+	 */
 	public static void mainMenu(Scanner input, Player player){
 		
 		int x = -1;
@@ -94,7 +99,11 @@ public class Main {
 					+"2 - Rotacionar barco.\n"
 					+"3 - Finalizar.\n"
 				);
-				menuOpt = input.nextInt();
+				if(player.getName().equals("maquina")) {
+					menuOpt = 3;
+				}else{
+					menuOpt = input.nextInt();
+				}
 				
 				int boatOpt = 0;
 				Boat selectedBoat = null;
@@ -167,13 +176,22 @@ public class Main {
 		}
 	}
 	
+	/**
+	 * Tela que será utilizada para informar onde deseja atirar nesta rodada.
+	 * @param input Scanner
+	 * @param player Player
+	 * @param prevShootCoords Coordenadas onde o jogador anterior atirou.
+	 * @return shootCoords int[2] 
+	 */
 	public static int[] battleMenu(Scanner input, Player player, int[] prevShootCoords) {
+		Random random = new Random();
+		
 		if(prevShootCoords[0] != -1) {
 			if(player.getBoard().getCoords()[prevShootCoords[0]][prevShootCoords[1]] instanceof Boat) {
 				Boat boatFound = player.getBoard().getCoords()[prevShootCoords[0]][prevShootCoords[1]];
 				int partNum = getPartNum(boatFound, player.getBoard().getCoords(), prevShootCoords[0], prevShootCoords[1]);
 				boatFound.destroyPart(partNum-1);
-				boolean[] dp = boatFound.getDestroyedParts();
+				System.out.println("ACERTOU!!!\n\n\n\n\n\n\n\n\n");
 			}
 			player.getBoard().setShotCoord(prevShootCoords[0], prevShootCoords[1]);
 		}
@@ -183,11 +201,21 @@ public class Main {
 		int x = -1;
 		int y = -1;
 		
-		System.out.println("Informe as coordenadas para atirar.");
-		System.out.print("X: ");
-		x = input.nextInt();
-		System.out.print("Y: ");
-		y = input.nextInt();
+		if(player.getName().equals("maquina")) {
+			x = random.nextInt(9); 
+			y = random.nextInt(9); 
+		}else {
+			while(x < 0 || y < 0 || x >= player.getBoard().getHeight() || y >= player.getBoard().getWidth()) {
+				System.out.println("Informe as coordenadas para atirar.");
+				System.out.print("X: ");
+				x = input.nextInt();			
+				System.out.print("Y: ");
+				y = input.nextInt();
+				if(x < 0 || y < 0 || x >= player.getBoard().getHeight() || y >= player.getBoard().getWidth()) {
+					System.out.println("Fora do tabuleiro.");
+				}
+			}
+		}
 		
 		return new int[] {x,y};
 	}

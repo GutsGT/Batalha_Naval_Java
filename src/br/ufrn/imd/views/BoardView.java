@@ -8,20 +8,24 @@ import br.ufrn.imd.models.Fragata;
 import br.ufrn.imd.models.Submarino;
 
 public abstract class BoardView {
+	/**
+	 * 
+	 * @param board Tabuleiro a imprimir
+	 */
 	public static void printBoard(Board board) {
-		System.out.print(" ");
+		System.out.print("X\\Y");
 		for(int f = 0; f < board.getWidth(); f++) {
 			System.out.print("  "+f+" ");
 		}
 		System.out.println();
-		System.out.print(" ");
+		System.out.print("   ");
 		for(int f = 0; f < board.getWidth(); f++) {
 			System.out.print("----");
 		}
 		Boat[][] coords = board.getCoords();
 		for(int f = 0; f < coords.length; f++){
 			System.out.println("-");
-			System.out.print(f);
+			System.out.print("  "+f);
 			for(int f2 = 0; f2 < coords[f].length; f2++) {
 				if(board.getShotCoord(f, f2)) {
 					System.out.print("|xxx");
@@ -43,7 +47,7 @@ public abstract class BoardView {
 				}
 			}
 			System.out.println("|");
-			System.out.print(" ");
+			System.out.print("   ");
 			for(int f2 = 0; f2 < board.getWidth(); f2++) {
 				System.out.print("----");
 			}

@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"Batalha_Naval","l":"br.ufrn.imd.dao"},{"m":"Batalha_Naval","l":"br.ufrn.imd.models"},{"m":"Batalha_Naval","l":"br.ufrn.imd.views"}];updateSearchResults();

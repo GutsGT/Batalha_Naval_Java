@@ -2,13 +2,6 @@ package br.ufrn.imd.models;
 
 import java.util.ArrayList;
 
-/**
- * @author Otávio Augusto
- * @version 1.0
- * 
- */
-
-
 public abstract class Boat implements IBoat{
 	private int width;		
 	private int height;
@@ -33,6 +26,10 @@ public abstract class Boat implements IBoat{
 		this.height = height;
 	}
 	
+	/**
+	 * Retorna o array booleano indicando quais partes do barco já foram destruídas.
+	 * @return boolean[]
+	 */
 	public boolean[] getDestroyedParts() {
 		return this.destroyedParts;
 	}
@@ -44,10 +41,17 @@ public abstract class Boat implements IBoat{
 		}
 	}
 	
+	/**
+	 * Destrói a parte do barco de acordo com o índice
+	 */
 	public void destroyPart(int index) {
 		this.destroyedParts[index] = true;
 	}
 	
+	/**
+	 * Informa se o barco está na horizontal ou vertical para simplificar a verificação de onde está o resto do barco.
+	 * @return
+	 */
 	public boolean getIsHorizontal() {
 		return this.isHorizontal;
 	}
